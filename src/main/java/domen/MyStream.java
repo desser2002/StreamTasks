@@ -46,16 +46,7 @@ public class MyStream<T> {
     }
 
     public MyStream<T> distinct() {
-        ArrayList<T> distinct = new ArrayList<>();
-        HashSet<T> seen = new HashSet<>();
-
-        for (T element : elements) {
-            if (!seen.contains(element)) {
-                distinct.add(element);
-                seen.add(element);
-            }
-        }
-        return new MyStream<>(distinct);
+        return new MyStream<>(new ArrayList<>(new LinkedHashSet<>(elements)));
     }
 
     public MyStream<T> limit(int maxSize) {
@@ -76,8 +67,7 @@ public class MyStream<T> {
     }
 
     public MyStream<T> sorted(Comparator<T> comparator) {
-        ArrayList<T> sorted = new ArrayList<>();
-        sorted.addAll(elements);
+        ArrayList<T> sorted = new ArrayList<>(elements);
         sorted.sort(comparator);
         return new MyStream<>(sorted);
     }
